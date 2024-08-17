@@ -4,9 +4,9 @@ import { Header, Footer, SideBar } from "@/components/layout";
 export const metadata = {
   title: {
     default: "ChatGPT Simulation",
-    template: '%s - ChatGPT'
+    template: '%s - ChatGPT',
   },
-  description: "Ask anything here..."
+  description: "Ask anything here...",
 };
 
 export default function RootLayout({
@@ -16,19 +16,19 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-    <body className="relative flex">
-      {/* Sidebar */}
-      <SideBar />
-
-      {/* Main Content Area */}
-      <div className="flex-grow flex flex-col ml-64"> {/* Adjust the margin to accommodate sidebar width */}
+      <body className="relative flex flex-col min-h-screen">
         <Header />
-        <main className="flex-grow pt-20 pb-16">
-          {children}
-        </main>
+        <div className="flex flex-grow">
+          {/* Sidebar */}
+          <SideBar />
+
+          {/* Main Content Area */}
+          <main className="flex-grow pt-20 pb-16 md:pl-64">
+            {children}
+          </main>
+        </div>
         <Footer />
-      </div>
-    </body>
-  </html>
+      </body>
+    </html>
   );
 }
