@@ -8,7 +8,7 @@ const Header = () => {
 
 
   return (
-    <header className="fixed top-0 left-0 right-0 bg-white shadow-md py-4 z-50">
+    <header className="fixed top-0 left-0 right-0 bg-white border-b-2 py-4 z-50">
       <div className="container mx-auto flex justify-between items-center">
         <div className="text-xl font-semibold px-8 text-gray-800">ChatGPT Simulation</div>
         <div className="flex items-center">

@@ -1,5 +1,5 @@
 import "./globals.css";
-import { Header, Footer } from "@/components/layout";
+import { Header, Footer, SideBar } from "@/components/layout";
 
 export const metadata = {
   title: {
@@ -16,11 +16,19 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="relative">
+    <body className="relative flex">
+      {/* Sidebar */}
+      <SideBar />
+
+      {/* Main Content Area */}
+      <div className="flex-grow flex flex-col ml-64"> {/* Adjust the margin to accommodate sidebar width */}
         <Header />
-        {children}
+        <main className="flex-grow pt-20 pb-16">
+          {children}
+        </main>
         <Footer />
-      </body>
-    </html>
+      </div>
+    </body>
+  </html>
   );
 }
