@@ -8,16 +8,14 @@ const Header = () => {
 
 
   return (
-    <header className="bg-white shadow-md py-4">
+    <header className="fixed top-0 left-0 right-0 bg-white shadow-md py-4 z-50">
       <div className="container mx-auto flex justify-between items-center">
         <div className="text-xl font-semibold px-8 text-gray-800">ChatGPT Simulation</div>
         <div className="flex items-center">
-          <button className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
+          <button className="bg-light-gray text-dark-gray hover:text-white px-4 py-2 mx-4 rounded-lg hover:bg-dark-gray">
             Login | SignUp
           </button>
-          <button className="ml-4 text-gray-500 hover:text-gray-700">
-            <i className="fas fa-ellipsis-v"></i>
-          </button>
+         
         </div>
       </div>
     </header>
