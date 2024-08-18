@@ -1,21 +1,14 @@
-import { ChatInput } from "@/components/sections";
-import Image from "next/image";
-import { sendRequest } from "@/utils/apiChat";
+// src/pages/page.tsx
+import React from "react";
+import { ChatBox } from "@/components/sections";
 
-export default async function Home() {
-  try {
-    const responseData = await sendRequest("Hello, I need your help!");
-    console.log(responseData);
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
+export const runtime = 'edge'
+
+export default function Home() {
 
   return (
     <div className="flex flex-col h-screen">
-      {/* Other chat components here */}
-      <div className="mt-auto">
-        <ChatInput />
-      </div>
+      <ChatBox />
     </div>
   );
 }

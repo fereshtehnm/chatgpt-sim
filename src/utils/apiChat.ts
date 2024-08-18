@@ -2,12 +2,9 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
 // Load environment variables and ensure they are defined
-const baseUrl = process.env.NEXT_PUBLIC_API_URL as string;
-const token = process.env.JWT_SECRET as string;
+const baseUrl = process.env.NEXT_PUBLIC_API_URL ;
+const token = process.env.TOKEN_SECRET ;
 
-if (!baseUrl || !token) {
-  throw new Error('Environment variables NEXT_PUBLIC_API_URL or JWT_SECRET are not defined.');
-}
 
 export const sendRequest = async (text: string) => {
   const options: AxiosRequestConfig = {

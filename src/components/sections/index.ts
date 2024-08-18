@@ -1,4 +1,4 @@
-import ChatInput from "./ChatInput";
+import ChatBox from "./ChatBox";
 export {
-    ChatInput
+    ChatBox
 }
