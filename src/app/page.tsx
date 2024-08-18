@@ -1,4 +1,3 @@
-// src/pages/page.tsx
 import React from "react";
 import { ChatBox } from "@/components/sections";
 

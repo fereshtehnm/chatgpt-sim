@@ -1,48 +1,26 @@
-import OpenAI from 'openai'
-import { OpenAIStream, StreamingTextResponse } from 'ai'
-import { NextResponse } from 'next/server'
-import { clerkClient, currentUser } from '@clerk/nextjs'
+import OpenAI from 'openai';
+import { OpenAIStream, StreamingTextResponse } from 'ai';
 
-export const runtime = 'edge'
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || '' })
+// Create an OpenAI API client
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 
 export async function POST(req: Request) {
-  try {
-    if (!process.env.OPENAI_API_KEY) {
-      return new NextResponse('Missing OpenAI API Key.', { status: 400 })
-    }
+  // Extract the `prompt` from the body of the request
+  const { prompt } = await req.json();
 
-    const user = await currentUser()
+  // Ask OpenAI for a streaming completion given the prompt
+  const response = await openai.completions.create({
+    model: 'gpt-3.5-turbo-instruct',
+    max_tokens: 2000,
+    stream: true,
+    prompt,
+  });
 
-    if (!user) {
-      return new NextResponse('You need to sign in first.', { status: 401 })
-    }
+  // Convert the response into a friendly text-stream
+  const stream = OpenAIStream(response);
 
-    const credits = Number(user.publicMetadata?.credits || 0)
-
-    if (!credits) {
-      return new NextResponse('You have no credits left.', { status: 402 })
-    }
-
-    const { messages } = await req.json()
-    const response = await openai.chat.completions.create({
-      model: 'gpt-3.5-turbo',
-      stream: true,
-      messages
-    })
-
-    // Deduct credits
-    await clerkClient.users.updateUserMetadata(user.id, {
-      publicMetadata: {
-        credits: credits - 1
-      }
-    })
-
-    const stream = OpenAIStream(response)
-    return new StreamingTextResponse(stream)
-  } catch (error: any) {
-    return new NextResponse(error.message || 'Something went wrong!', {
-      status: 500
-    })
-  }
+  // Respond with the stream
+  return new StreamingTextResponse(stream);
 }
