@@ -16,6 +16,6 @@ pnpm dev
 bun dev
 ```
 
-then make sure to build a new .env.local file with the data stored in  .env.local.example also don't forget to copy api key from EdenAI account
+then make sure to build a new .env.local file with the data stored in  .env.local.example also don't forget to copy api key from EdenAI account.
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
