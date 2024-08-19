@@ -1,13 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
+import { EdenAIResponse } from "@/types";
 import axios from "axios";
 
 interface Message {
   role: "user" | "AI";
   content: string;
-}
-
-interface EdenAIResponse {
-  generated_text: string;
 }
 
 export async function POST(req: NextRequest) {
@@ -34,7 +31,7 @@ export async function POST(req: NextRequest) {
 
     const prompt = messages.map((m) => m.content).join("\n");
 
-    const response = await axios.post(
+    const response = await axios.post<EdenAIResponse>(
       api_address,
       {
         providers: "mistral/small",

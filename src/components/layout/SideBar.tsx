@@ -42,7 +42,7 @@ const SideBar = () => {
               <li key={item.id} className="mb-2">
                 <a
                   href={item.url}
-                  className="block px-4 py-2 text-gray-700 rounded-lg hover:bg-gray-300"
+                  className="block px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-200"
                 >
                   {item.title}
                 </a>
