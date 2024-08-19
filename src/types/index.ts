@@ -1,3 +1,4 @@
-export interface ChatInputProps {
-  onSendMessage: (message: string) => void;
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  type: 'button' | 'submit' | 'reset';
+  children: React.ReactNode;
 }

@@ -1,23 +1,65 @@
-import OpenAI from 'openai';
-import { OpenAIStream, StreamingTextResponse } from 'ai';
+import { NextRequest, NextResponse } from "next/server";
+import axios from "axios";
 
-// Create an OpenAI API client
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+interface Message {
+  role: "user" | "AI";
+  content: string;
+}
 
-export async function POST(req: Request) {
-  const { messages } = await req.json();
+interface EdenAIResponse {
+  generated_text: string;
+}
 
-  // Ask OpenAI for a streaming chat completion given the prompt
-  const response = await openai.chat.completions.create({
-    model: 'gpt-3.5-turbo',
-    stream: true,
-    messages,
-  });
+export async function POST(req: NextRequest) {
+  const api_key = process.env.API_KEY;
+  const api_address = process.env.PUBLIC_API_ADDRESS as string;
 
-  // Convert the response into a friendly text-stream
-  const stream = OpenAIStream(response);
-  // Respond with the stream
-  return new StreamingTextResponse(stream);
+  if (!api_key) {
+    console.error("API_KEY environment variable is not set");
+    return NextResponse.json(
+      { error: "Server configuration error" },
+      { status: 500 }
+    );
+  }
+
+  try {
+    const { messages }: { messages: Message[] } = await req.json();
+
+    if (!messages || !Array.isArray(messages)) {
+      return NextResponse.json(
+        { error: "Invalid request body" },
+        { status: 400 }
+      );
+    }
+
+    const prompt = messages.map((m) => m.content).join("\n");
+
+    const response = await axios.post(
+      api_address,
+      {
+        providers: "mistral/small",
+        text: prompt,
+        chatbot_global_action: "Act as an assistant",
+        previous_history: [],
+        temperature: 0.0,
+        max_tokens: 150,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${api_key}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const aiResponse = response.data["mistral/small"].generated_text;
+
+    return NextResponse.json({ content: aiResponse });
+  } catch (error) {
+    console.error("Error generating text:", error);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
+  }
 }
