@@ -13,3 +13,7 @@ export interface MistralResponse {
 export interface EdenAIResponse {
   "mistral/small": MistralResponse;
 }
+export interface Message {
+  role: "user" | "AI";
+  content: string;
+}

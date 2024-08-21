@@ -4,11 +4,7 @@ import { useState, ChangeEvent, FormEvent } from "react";
 import Image from "next/image";
 import axios from "axios";
 import Button from "../ui/Button";
-
-interface Message {
-  role: "user" | "AI";
-  content: string;
-}
+import { Message } from "@/types";
 
 export default function Chat() {
   const [messages, setMessages] = useState<Message[]>([]);

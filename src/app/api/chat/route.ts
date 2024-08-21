@@ -1,11 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { EdenAIResponse } from "@/types";
 import axios from "axios";
+import { Message } from "@/types";
 
-interface Message {
-  role: "user" | "AI";
-  content: string;
-}
 
 export async function POST(req: NextRequest) {
   const api_key = process.env.API_KEY;
