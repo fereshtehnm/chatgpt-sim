@@ -3,7 +3,6 @@ import { EdenAIResponse } from "@/types";
 import axios from "axios";
 import { Message } from "@/types";
 
-
 export async function POST(req: NextRequest) {
   const api_key = process.env.API_KEY;
   const api_address = process.env.PUBLIC_API_ADDRESS as string;
@@ -17,16 +16,15 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const { messages }: { messages: Message[] } = await req.json();
+    const { messages }: { messages: Message[] } = await req.json(); // Extract the messages array from the request body
 
     if (!messages || !Array.isArray(messages)) {
       return NextResponse.json(
-        { error: "Invalid request body" },
+        { error: "Invalid request body" }, // Return a 400 error if messages are missing or not an array
         { status: 400 }
       );
     }
-
-    const prompt = messages.map((m) => m.content).join("\n");
+    const prompt = messages.map((m) => m.content).join("\n"); // Combine message contents into a prompt
 
     const response = await axios.post<EdenAIResponse>(
       api_address,
@@ -46,9 +44,9 @@ export async function POST(req: NextRequest) {
       }
     );
 
-    const aiResponse = response.data["mistral/small"].generated_text;
+    const aiResponse = response.data["mistral/small"].generated_text; // Extract the generated text from the response
 
-    return NextResponse.json({ content: aiResponse });
+    return NextResponse.json({ content: aiResponse }); // Return the AI's response as a JSON object
   } catch (error) {
     console.error("Error generating text:", error);
     return NextResponse.json(
