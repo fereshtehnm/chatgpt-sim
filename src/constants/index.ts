@@ -1,5 +1,3 @@
-// src/constants.ts
-
 export const historyItems = [
     { id: 1, title: "Next.js", url: "/history/1" },
     { id: 2, title: "IELTS Speaking", url: "/history/2" },

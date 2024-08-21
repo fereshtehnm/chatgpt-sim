@@ -3,9 +3,10 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   children: React.ReactNode;
 }
 
+// START: types needed for ai response:
 export interface MistralResponse {
   generated_text: string;
-  message: Array<object>; // Assuming the messages array contains objects. Adjust if necessary.
+  message: Array<object>; // Assuming the messages array contains objects
   status: string;
   cost: number;
 }
@@ -17,3 +18,4 @@ export interface Message {
   role: "user" | "AI";
   content: string;
 }
+// END: types needed for ai response:

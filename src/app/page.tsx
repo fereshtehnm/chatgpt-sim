@@ -1,7 +1,6 @@
 import React from "react";
 import { ChatBox } from "@/components/sections";
 
-export const runtime = 'edge'
 
 export default function Home() {
 
