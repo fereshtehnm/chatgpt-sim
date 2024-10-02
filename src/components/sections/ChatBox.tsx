@@ -26,7 +26,7 @@ export default function Chat() {
       const response = await axios.post<{ content: string }>("/api/chat", {
         messages: [...messages, userMessage],
       });
-
+      
       if (response.data.content) {
         const aiMessage: Message = {
           role: "AI",
