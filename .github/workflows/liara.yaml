@@ -15,8 +15,7 @@ jobs:
       - name: update-liara
         env:
           LIARA_TOKEN: ${{ secrets.LIARA_API_TOKEN }}
-          PUBLIC_API_ADDRESS: ${{ secrets.PUBLIC_API_ADDRESS }}
-          API_KEY: ${{ secrets.API_KEY }}
+          
           
         run: |
           npm i -g @liara/cli@5
